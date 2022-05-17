@@ -85,6 +85,7 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 // Per-process state
 struct proc {
   struct spinlock lock;
+  struct spinlock lock2;       // Lock for list purposes
 
   // p->lock must be held when using these:
   enum procstate state;        // Process state
@@ -92,7 +93,10 @@ struct proc {
   int killed;                  // If non-zero, have been killed
   int xstate;                  // Exit status to be returned to parent's wait
   int pid;                     // Process ID
-
+  int cpu_number;              // CPU number
+  int index_in_proc;           // Process index in proc[NPROC]
+  int next_index_in_list;      // Next Process index in proc[NPROC]
+  
   // wait_lock must be held when using this:
   struct proc *parent;         // Parent process
 

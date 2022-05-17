@@ -95,3 +95,31 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_set_cpu(void){
+  int n;
+
+  if(argint(0, &n) < 0)
+    return -1;
+  
+  return set_cpu(n);
+
+}
+
+uint64
+sys_get_cpu(void){
+  
+  return get_cpu();
+
+}
+
+uint64
+sys_cpu_process_count(void){
+   int n;
+
+  if(argint(0, &n) < 0)
+    return -1;
+  
+  return cpu_process_count(n);
+}
